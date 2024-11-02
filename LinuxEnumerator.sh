@@ -9,8 +9,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 
 # User groups
-
-if id_output=$("id"); then
+if id_output=$(id); then
     echo -e "$GREEN[*] User groups\n$RESET"
     echo -e "$id_output"
     echo -e "$RESET"
@@ -18,9 +17,10 @@ else
     echo -e "$RED[!] Error with group enumeration"
     echo -e "$RESET"
 fi
+echo "==========================================================================================="
 
 # Environment variables
-if env_output=$("env"); then
+if env_output=$(env); then
     echo -e "$GREEN[*] Environment variables\n$RESET"
     echo -e "$env_output"
     echo -e "$RESET"
@@ -29,8 +29,8 @@ else
     echo -e "$RESET"
 fi
 echo "==========================================================================================="
-# Network information
 
+# Network information
 if ip_output=$(ip a); then
     echo -e "$GREEN[*] IP address information\n$RESET"
     echo -e "$ip_output"
@@ -40,6 +40,7 @@ else
     echo -e "$RESET"
 fi
 echo "==========================================================================================="
+
 # Network ports (ss)
 if ss_output=$(ss -tulpn); then
     echo -e "$GREEN[*] Network ports\n$RESET"
@@ -49,6 +50,7 @@ else
     echo -e "$RESET"    
 fi
 echo "==========================================================================================="
+
 # Kernel informations
 if uname_output=$(uname -a); then
     echo -e "$GREEN[*] Kernel information\n$RESET"
@@ -58,10 +60,9 @@ else
     echo -e "$RED[!] Error with kernel information enumeration"
     echo -e "$RESET"
 fi
-
 echo "==========================================================================================="
-# Running processes
 
+# Running processes
 if ps_output=$(ps aux); then
     echo -e "$GREEN[*] Running processes\n$RESET"
     echo -e "$ps_output"
@@ -70,9 +71,21 @@ else
     echo -e "$RED[!] Error with running processes enumeration"
     echo -e "$RESET"
 fi
+echo "==========================================================================================="
+
+# Programm Capabilities
+if cap_output=$(getcap -r / 2>/dev/null); then
+    echo -e "$GREEN[*] Capabilities\n$RESET"
+    echo -e "$cap_output"
+    echo -e "$RESET"
+else
+    echo -e "$RED[!] Error with running processes enumeration"
+    echo -e "$RESET"
+fi
+echo "==========================================================================================="
+
 
 # Interesting directories
-
 get_interesting_directories() {
     folder_name=$1
     if ls_output=$(ls -la $folder_name); then
@@ -84,8 +97,6 @@ get_interesting_directories() {
         echo -e "$RESET"
     fi
 }
-
-echo "==========================================================================================="
 
 # /opt folder
 get_interesting_directories "/"
