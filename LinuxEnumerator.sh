@@ -6,6 +6,18 @@
 RESET='\033[0m'
 RED='\033[0;31m'
 GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+
+# User groups
+
+if id_output=$("id"); then
+    echo -e "$GREEN[*] User groups\n$RESET"
+    echo -e "$id_output"
+    echo -e "$RESET"
+else
+    echo -e "$RED[!] Error with group enumeration"
+    echo -e "$RESET"
+fi
 
 # Environment variables
 if env_output=$("env"); then
@@ -84,3 +96,6 @@ get_interesting_directories "/var/mail"
 get_interesting_directories "/var/opt"
 get_interesting_directories "/var/tmp"
 get_interesting_directories "/home"
+
+echo -e "$YELLOW[i] Remember to run pspy!"
+echo -e "$RESET"
