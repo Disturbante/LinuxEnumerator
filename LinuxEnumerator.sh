@@ -31,8 +31,8 @@ fi
 echo "==========================================================================================="
 
 # Network information
-if ip_output=$(ip a); then
-    echo -e "$GREEN[*] IP address information\n$RESET"
+if ip_output=$(ip a && ip r); then
+    echo -e "$GREEN[*] IP address and routes information\n$RESET"
     echo -e "$ip_output"
     echo -e "$RESET"
 else
@@ -83,6 +83,34 @@ else
     echo -e "$RESET"
 fi
 echo "==========================================================================================="
+
+# Remember that other users crontabs could be hidden:
+
+echo -e "$YELLOW[i] Remember that other users crontabs could be hidden so use PSPY!"
+echo -e "$RESET"
+
+# Get user crontabs
+if crontab_output=$(crontab -l); then
+    echo -e "$GREEN[*] Crontab\n$RESET"
+    echo -e "$crontab_output"
+    echo -e "$RESET"
+else
+    echo -e "$RED[!] Error with user crontab enumeration"
+    echo -e "$RESET"
+fi
+echo "==========================================================================================="
+
+# Get global crontabs
+if crontab_output=$(cat /etc/crontab); then
+    echo -e "$GREEN[*] Crontab\n$RESET"
+    echo -e "$crontab_output"
+    echo -e "$RESET"
+else
+    echo -e "$RED[!] Error with global crontab enumeration"
+    echo -e "$RESET"
+fi
+echo "==========================================================================================="
+
 
 
 # Interesting directories
